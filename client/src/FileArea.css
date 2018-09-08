@@ -1,0 +1,7 @@
+.fileArea {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  background-color: cornflowerblue;
+  height: 100%;
+  width: 100%;
+}

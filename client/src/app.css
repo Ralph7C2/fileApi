@@ -1,0 +1,16 @@
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.fileTree {
+  flex: 1 100px;
+}
+
+.fileArea {
+  flex: 4 700px;
+  height: 100%;
+}
