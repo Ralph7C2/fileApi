@@ -34,24 +34,24 @@ router.get("/test", (req, res) => {
   ]);
 });
 
-async function mapChildren(node, data) {
-  promises = node.children.map(async child => {
-    console.log(child);
+async function mapChildren(node) {
+  let promises = node.children.map(async child => {
     let file = await FSNode.findById(child);
-    console.log(file);
     if (file.isDir) {
-      data.children.push({
+      console.log("Found dir");
+      return {
         id: file._id,
         name: file.name,
-        children: []
-      });
+        children: await mapChildren(file)
+      };
     } else {
-      data.children.push({
+      return {
         id: file._id,
         name: file.name
-      });
+      };
     }
   });
+  console.log(promises);
   return Promise.all(promises);
 }
 
@@ -61,10 +61,10 @@ router.get("/files", async (req, res) => {
     {
       id: root._id,
       name: "root",
-      children: []
+      children: await mapChildren(root)
     }
   ];
-  await mapChildren(root, data[0]);
+  console.log(JSON.stringify(data, null, 2));
   console.log("Returning");
   res.json(data);
 });
